@@ -32,12 +32,13 @@ Solution:def weakest_strong_link(strength):
     m = len(strength)
     n = len(strength[0])
     
-    # Initializing min_rows with zeros for each row
+    # Initializing min_rows with zeros for each row, [0,0] contains min values of 2 rows
     min_rows = [0] * m  
-    # Initializing max_cols with zeros for each column
+    # Initializing max_cols with zeros for each column, row [0,0,0] contains min values of 3 columns
     max_cols = [0] * n  
     
     # Finding the minimums in each row 
+    # strength = [[10, 20, 30], [40, 5,  60] ] -> min_rows = [10, 5]
     for i in range(m):
         min_rows[i] = min(strength[i])
 
@@ -51,7 +52,7 @@ Solution:def weakest_strong_link(strength):
     for i in range(m):
         for j in range(n):
             if strength[i][j] == min_rows[i] and strength[i][j] == max_cols[j]:
-                return strength[i][j]
+                return strength[i][j] -> nothing could find then return -1 at the end
     
     return -1
     
