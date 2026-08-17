@@ -5,9 +5,22 @@ For example, 5!=5∗4∗3∗2∗1=120 so we'd return 120.
 Assume is n is a non-negative integer.
 
 */
-Solution:
+Solution 1:
     def factorial(n):
       answer = 1
       for i in range(1, n+1):
           answer = answer * i
-      return answer
+      return answer # Waits for loop to complete.
+
+Solution 2:
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n-1) 
+
+return inside a loop -> Exits immediately on the first match.
+return after a loop -> Waits for the entire loop to finish scanning before exiting.
+return inside if / else branches -> Returns different outputs depending on conditions.
+
+
