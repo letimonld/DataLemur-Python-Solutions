@@ -1,0 +1,192 @@
+# Python Data Structures: List, Tuple, Set, Dictionary
+
+A quick-reference cheat sheet for Python's four core built-in data structures.
+
+---
+
+## Quick Comparison
+
+| Feature       | List         | Tuple        | Set              | Dictionary            |
+|---------------|--------------|--------------|------------------|------------------------|
+| Syntax        | `[1, 2, 3]`  | `(1, 2, 3)`  | `{1, 2, 3}`      | `{"a": 1, "b": 2}`     |
+| Ordered       | Yes          | Yes          | No               | Yes (insertion order, Python 3.7+) |
+| Mutable       | Yes          | No           | Yes              | Yes                    |
+| Duplicates    | Allowed      | Allowed      | Not allowed      | Keys unique, values can repeat |
+| Indexed by    | Position (int) | Position (int) | N/A (no indexing) | Key                  |
+| Use case      | Ordered, changeable collection | Fixed, protected collection | Unique items, fast membership tests | Key-value lookups |
+
+---
+
+## 1. List — `[]`
+
+Ordered, mutable, allows duplicates.
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+# Access
+fruits[0]          # "apple"
+fruits[-1]          # "cherry"
+fruits[0:2]         # ["apple", "banana"]
+
+# Modify
+fruits.append("date")          # add to end
+fruits.insert(1, "kiwi")       # insert at index
+fruits.remove("banana")        # remove by value
+fruits.pop()                   # remove & return last item
+fruits.pop(0)                  # remove & return item at index
+fruits[0] = "avocado"          # update by index
+fruits.sort()                  # sort in place
+fruits.reverse()               # reverse in place
+fruits.extend(["fig", "grape"])# merge another list in
+
+# Other
+len(fruits)
+"apple" in fruits
+fruits.count("apple")
+fruits.index("cherry")
+fruits.copy()
+```
+
+**When to use:** ordered collections you need to change (add/remove/reorder items).
+
+---
+
+## 2. Tuple — `()`
+
+Ordered, **immutable**, allows duplicates.
+
+```python
+point = (10, 20)
+single = (5,)          # note the trailing comma for single-element tuples
+
+# Access (same as list)
+point[0]        # 10
+point[-1]       # 20
+
+# Cannot modify — this raises an error:
+# point[0] = 99  ❌
+
+# Useful operations
+len(point)
+point.count(10)
+point.index(20)
+
+# Unpacking
+x, y = point
+```
+
+**When to use:** fixed collections that shouldn't change — coordinates, RGB values, function return values, dictionary keys (tuples are hashable, lists aren't).
+
+---
+
+## 3. Set — `{}` or `set()`
+
+Unordered, mutable, **no duplicates**, no indexing.
+
+```python
+nums = {1, 2, 3, 3, 2}   # {1, 2, 3} — duplicates auto-removed
+empty_set = set()          # NOT {} — that creates an empty dict!
+
+# Modify
+nums.add(4)
+nums.remove(2)      # raises error if not found
+nums.discard(10)    # no error if not found
+nums.pop()          # removes an arbitrary item
+
+# Set math
+a = {1, 2, 3}
+b = {2, 3, 4}
+a | b     # union -> {1, 2, 3, 4}
+a & b     # intersection -> {2, 3}
+a - b     # difference -> {1}
+a ^ b     # symmetric difference -> {1, 4}
+
+# Membership (very fast, O(1))
+3 in a
+
+# Immutable version
+frozen = frozenset([1, 2, 3])
+```
+
+**When to use:** deduplication, fast membership checks, mathematical set operations (union/intersection/difference).
+
+---
+
+## 4. Dictionary — `{key: value}`
+
+Ordered (insertion order), mutable, keys must be unique & hashable.
+
+```python
+person = {"name": "Alex", "age": 30, "city": "Maastricht"}
+
+# Access
+person["name"]                 # "Alex" (raises KeyError if missing)
+person.get("name")             # "Alex" (returns None if missing)
+person.get("email", "N/A")     # default value if key missing
+
+# Modify
+person["email"] = "alex@example.com"   # add/update
+person.update({"age": 31})             # update multiple keys
+del person["city"]                     # remove key
+person.pop("age")                      # remove & return value
+person.setdefault("country", "NL")     # add only if key doesn't exist
+
+# Iterate
+for key in person:
+    print(key)
+
+for key, value in person.items():
+    print(key, value)
+
+for value in person.values():
+    print(value)
+
+# Other
+"name" in person        # checks keys
+len(person)
+person.keys()
+person.values()
+person.items()
+person.copy()
+
+# Dict comprehension
+squares = {x: x**2 for x in range(5)}
+```
+
+**When to use:** key-value lookups, structured records, fast access by a unique identifier.
+
+---
+
+## Choosing the Right Structure
+
+- **Need order + duplicates + changeable?** → **List**
+- **Need order + duplicates but fixed/protected?** → **Tuple**
+- **Need uniqueness + fast lookups, don't care about order?** → **Set**
+- **Need to map keys to values?** → **Dictionary**
+
+---
+
+## Time Complexity Cheat Sheet (average case)
+
+| Operation          | List   | Tuple  | Set    | Dict   |
+|---------------------|--------|--------|--------|--------|
+| Access by index/key | O(1)   | O(1)   | N/A    | O(1)   |
+| Search (`in`)        | O(n)   | O(n)   | O(1)   | O(1)   |
+| Insert/Add           | O(1)*  | N/A    | O(1)   | O(1)   |
+| Delete                | O(n)   | N/A    | O(1)   | O(1)   |
+
+\* Amortized; appending at the end of a list is O(1), inserting elsewhere is O(n).
+
+---
+
+## Converting Between Types
+
+```python
+list((1, 2, 3))          # tuple -> list
+tuple([1, 2, 3])          # list -> tuple
+set([1, 1, 2, 3])          # list -> set (dedupes) -> {1, 2, 3}
+list({1, 2, 3})            # set -> list
+dict([("a", 1), ("b", 2)]) # list of tuples -> dict
+list({"a": 1}.items())     # dict -> list of tuples
+```
