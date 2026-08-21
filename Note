@@ -1,0 +1,10 @@
+1. isalpha()	letters only	'abc'.isalpha() → True
+   isdigit()	digits only	'123'.isdigit() → True
+   isalnum()	letters or digits	'abc123'.isalnum() → True
+   isspace()	whitespace only	' '.isspace() → True
+   isupper()	all uppercase	'ABC'.isupper() → True
+
+   isalnum() checks whether a string (or in this case, a single character) is alphanumeric meaning it consists only of letters (alphabetic) and/or digits (numeric).
+   isalnum is a contraction of "is alpha-numeric":	letters, digits, whitespace and all uppercase only
+  
+    e.g: 	' '.isspace() → True; 'ABC'.isupper() → True; ','.isalnum()   # False (punctuation)
