@@ -1,0 +1,71 @@
+/*
+Given an integer n, check if it is a looping number. A looping number has the following properties:
+
+It is repeatedly replaced by the sum of the squares of its digits.
+This process continues until:
+The number becomes 1, in which case it is not a looping number.
+The number starts repeating in a cycle that does not include 1, making it a looping number.
+Return True if n is a looping number, otherwise return False.
+Example #1 
+
+Input: n = 4 
+
+Output: True 
+
+Explanation: 
+
+4^2 = 16 
+
+1^2 + 6^2 = 1 + 36 = 37 
+
+3^2 + 7^2 = 9 + 49 = 58 
+
+5^2 + 8^2 = 25 + 64 = 89 
+
+8^2 + 9^2 = 64 + 81 = 145 
+
+1^2 + 4^2 + 5^2 = 1 + 16 + 25 = 42 
+
+4^2 + 2^2 = 16 + 4 = 20 
+
+2^2 + 0^2 = 4 + 0 = 4 
+
+Since the number loops back to 4, it is a looping number. 
+
+ Example #2 
+
+Input: n = 19 
+
+Output: False 
+
+Explanation: 
+
+1^2 + 9^2 = 1 + 81 = 82 
+
+8^2 + 2^2 = 64 + 4 = 68 
+
+6^2 + 8^2 = 36 + 64 = 100 
+
+1^2 + 0^2 + 0^2 = 1 + 0 + 0 = 1 
+
+Since the number reaches 1, it is not a looping number. 
+*/
+
+
+Solution: 
+def is_looping(n):
+    def next_number(num):
+        nxt = 0
+        while num > 0:
+            cur = num % 10
+            nxt += cur**2
+            num //= 10
+        return nxt
+    
+    visited = set()
+    while n != 1:
+        if n in visited:
+            return True
+        visited.add(n)
+        n = next_number(n)
+    return False
