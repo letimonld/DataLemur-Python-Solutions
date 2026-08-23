@@ -1,0 +1,43 @@
+/*
+You're given an array nums of n integers and an integer k.
+
+The k-radius average for a subarray of nums centered at some index i is the average of all elements from indices i - k to i + k (inclusive). If there aren’t enough elements before or after index i to cover this radius, the k-radius average is -1.
+
+Build and return an array averages of length n, where averages[i] contains the k-radius average for the subarray centered at index i.
+
+Return your result rounded to 2 decimal places.
+
+p.s. before you tackle this challenge, maybe try this related warmup problem from Walmart called Average Subarray (where you find the maximum average of any subarray of length k).
+
+Example #1
+Input: nums = [7, 2, 5, 12, 9, 4, 1], k = 2
+
+Output: [-1, -1, 7.0, 6.4, 6.2, -1, -1]
+
+Explanation:
+1. For i = 0, i = 1, i = 5 and i = 6, we can’t calculate a k-radius average since there aren’t enough elements before or after these indices, 
+that is why the value at those indexes is -1.
+2.For i = 2, we calculate the average of the subarray from nums[0] to nums[4], which gives us: ( 7 + 2 + 5 + 12 + 9 ) / 5 = 35 / 5 = 7.0
+3.For i = 3, we calculate the average of the subarray from nums[1] to nums[5], which gives us: ( 2 + 5 + 12 + 9 + 4 ) / 5 = 32 / 5 = 6.4 (2+5+12+9+4)/5=32/5=6.4
+4.For i = 4, we calculate the average of the subarray from nums[2] to nums[6], which gives us: ( 5 + 12 + 9 + 4 + 1 ) / 5 = 31 / 5 = 6.2
+*/
+
+Solution: 
+def k_radius_avg(nums, k):
+    n = len(nums)
+    '''
+    Initialize averages array 
+    with -1 (default for invalid ranges)
+    '''
+    averages = [-1] * n
+    # Size of the k-radius subarray
+    k_radius_size = 2 * k + 1
+    
+    window_sum = sum(nums[:k_radius_size])
+    
+    for i in range(k, n - k):
+        averages[i] = round(window_sum / k_radius_size, 2)
+        if i + k + 1 < n:
+            window_sum += nums[i + k + 1] - nums[i - k]
+    
+    return averages
