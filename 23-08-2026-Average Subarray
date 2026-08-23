@@ -1,0 +1,42 @@
+/*
+You are given an integer array nums consisting of n elements, and an integer k.
+
+Your task is to find a contiguous subarray of nums whose length is exactly k that has the highest average value. A subarray is simply a sequence of consecutive elements from the original array. After identifying this subarray, return the average value, rounded to two decimal places.
+
+Example #1
+Input: nums = [1, 2, -5, -3, 10, 3], k = 3
+
+Output: 3.33
+
+Explanation: The subarray here is [-3, 10, 3] , so the average is 3.33.
+
+Example #2
+Input: nums = [9], k = 1
+
+Output: 9.00
+
+Explanation: The subarray here is just [9], so its average is exactly 9.00.
+
+*/
+
+Solution: 
+def max_avg_subarray(nums, k):
+    # Start by calculating the sum of the first k elements
+    current_sum = sum(nums[:k])
+    max_sum = current_sum
+    
+    # Slide the window from the k-th element to the end
+    for i in range(k, len(nums)):
+        '''
+        Update the current sum by adding the next element 
+        and removing the leftmost element
+        '''
+        current_sum += nums[i] - nums[i - k]
+        # Update the max_sum if the current sum is greater
+        max_sum = max(max_sum, current_sum)
+    
+    '''
+    Return the maximum average, 
+    rounded to two decimal places
+    '''
+    return round(max_sum / k, 2)
