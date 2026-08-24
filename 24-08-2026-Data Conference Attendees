@@ -1,0 +1,51 @@
+/*
+You’re at a Data Science conference with an unknown number of attendees. The attendees have a wide range of titles, such as Data Scientist, Data Analyst, ML Product Manager, ML Engineer, Founder, CTO, and others.
+
+During the event, you ask a sample of n attendees the following question:
+
+"How many other people here have you met with the same title as you?"
+
+Each response is recorded in the answers array, where answers[i] is the response of the i-th person you surveyed. Assume that each person you surveyed has encountered every other person at the conference with the same title.
+
+Given the array answers, return the minimum possible total number of attendees at the conference.
+
+Examples:
+Example 1:
+Input: answers = [2, 1, 1]
+Output: 5
+Explanation:
+
+The first person (perhaps a Data Scientist) reports encountering 2 other people with the same title.
+The second and third persons each report encountering 1 other person with their title, which suggests these two respondents share the same title.
+Therefore, there must be 3 people with the title of the first person and 2 people with the title shared by the second and third persons, for a minimum total of 5 attendees.
+You could assume that both people who answered 1 are talking about different people you didn’t ask, making your answer 7, but this would not give the minimum attendance.
+
+Example 2:
+Input: answers = [0, 0, 1]
+Output: 4
+Explanation:
+
+The first two respondents each report 0 others with their title, implying they have unique titles.
+The third person reports encountering 1 other person with their title, which suggests a minimum of 2 people with this title.
+Thus, the minimum total number of attendees at the conference is 4: two with unique titles and two sharing the same title.
+*/
+
+Solution: 
+def min_attendees(answers):
+    frequency = {}
+    res = 0
+    
+    for ans in answers:
+        # Initialize the count for each new answer
+        if ans not in frequency:
+            frequency[ans] = 0
+        
+        # If a new batch is needed, add it to the result
+        if frequency[ans] % (ans + 1) == 0:
+            res += ans + 1
+        
+        # Update the count for the current answer
+        frequency[ans] += 1
+    
+    return res
+    
