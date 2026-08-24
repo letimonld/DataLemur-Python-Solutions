@@ -1,0 +1,56 @@
+/*
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+In case you don’t think about spirals that often (unless you're pondering galaxies or those satisfying snail shells), here’s what we mean: start at the top-left corner and move right across the first row, then down the last column, left along the bottom row, and finally back up the first column. Keep spiraling inward until you’ve collected all the elements.
+
+It’s like peeling layers off an onion… but way less tear-inducing!
+
+Example #1
+Input: matrix = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+
+![Spiral Matrix Example 1 DataLemur]
+
+Example #2
+Input: matrix = [[1, 2, 3],[8, 9, 4],[7, 6, 5]]
+
+Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Spiral Matrix Example 2 DataLemur
+*/
+
+Solution: 
+  def spiral_order(matrix):
+        # Initialize boundaries
+        left, right = 0, len(matrix[0]) - 1
+        top, bottom = 0, len(matrix) - 1
+        ans = []
+        
+        # Continue while there are boundaries to process
+        while left <= right and top <= bottom:
+            # Traverse from left to right along the top boundary
+            for i in range(left, right + 1):
+                ans.append(matrix[top][i])
+            top += 1  # Shrink the top boundary
+            
+            # Traverse from top to bottom along the right boundary
+            for i in range(top, bottom + 1):
+                ans.append(matrix[i][right])
+            right -= 1  # Shrink the right boundary
+            
+            # Check if boundaries have crossed
+            if not (left <= right and top <= bottom):
+                break
+            
+            # Traverse from right to left along the bottom boundary
+            for i in range(right, left - 1, -1):
+                ans.append(matrix[bottom][i])
+            bottom -= 1  # Shrink the bottom boundary
+            
+            # Traverse from bottom to top along the left boundary
+            for i in range(bottom, top - 1, -1):
+                ans.append(matrix[i][left])
+            left += 1  # Shrink the left boundary
+        
+        return ans
