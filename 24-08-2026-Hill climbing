@@ -1,0 +1,40 @@
+/*
+You're attempting to climb a hill—not in a mathematical optimization sense (check out hill climbing for that), but literally outside, touching grass, and trying to climb a hill.
+
+Imagine there are n steps carved into the hill. You can go up using either 1 or 2 steps at a time.
+
+Your task is to return the number of distinct ways to reach the top of the hill.
+
+Example 1:
+Input: 3
+Output: 3
+Explanation: There are three distinct ways to climb to the top of a hill with 3 steps:
+
+Take 1 step, then 1 step, then 1 step.
+Take 1 step, then 2 steps.
+Take 2 steps, then 1 step.
+Example 2:
+Input: 4
+Output: 5
+Explanation: There are five distinct ways to climb to the top of a hill with 4 steps:
+
+Take 1 step, then 1 step, then 1 step, then 1 step.
+Take 1 step, then 1 step, then 2 steps.
+Take 1 step, then 2 steps, then 1 step.
+Take 2 steps, then 1 step, then 1 step.
+Take 2 steps, then 2 steps.
+
+*/
+
+Solution: 
+def climb_hill(n):
+    # Initialize variables for the last two steps
+    previous_step, current_step = 1, 1
+    for i in range(2, n + 1):
+        # Calculate ways for the current step
+        next_step = previous_step + current_step
+        previous_step = current_step
+        current_step = next_step
+    
+    return current_step
+    
