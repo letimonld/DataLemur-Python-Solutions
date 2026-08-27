@@ -1,0 +1,35 @@
+/*
+Given an array of integers nums and an integer k, return the largest possible maxSum < k such that maxSum = nums[i] + nums[j] and i ≠ j. If no maxSum < k is possible, return -1.
+
+Example #1
+Input: nums = [34, 23, 1, 24, 75, 33, 54, 8], k = 60
+
+Output: 58
+
+Explanation: The greatest possible sum less than 60 is 58, made by adding 34 + 24
+*/
+Solution: 
+  # initialize pointers
+  left = 0
+  right = len(nums)-1
+  
+  # initialize, in case we find that no pair sums up to less than k
+  max_sum = -1
+  
+  while left < right:
+    cur_sum = nums[left] + nums[right]
+    
+    if cur_sum >= k:
+      '''
+      lowest possible sum including right is
+      greater than k, so no need to keep considering right
+      '''
+      right = right-1
+    else:
+      '''
+      cur_sum is greatest possible sum including left so any other 
+      pair including left cannot possibly improve max_sum
+      '''
+      max_sum = max(cur_sum, max_sum)
+      left = left+1
+    
