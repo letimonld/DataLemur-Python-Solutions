@@ -1,0 +1,68 @@
+/*
+
+Given an m x n grid of characters board and a string word, return True if word exists in the grid.
+
+For the word to exist, you must be able to construct it from a sequence of cells, where each is adjacent (horizontally or vertically, but not diagonal) to the next one in the sequence. The same cell may not be used twice.
+
+Example #1
+Word Search DataLemur Example
+
+Input: board = [['A', 'L', 'E', 'D'], ['E', 'F', 'M', 'H'], ['I', 'R', 'U', 'L']] , word = "LEMUR"
+
+Output: True
+
+Example #2
+Word Search Peter Example
+
+Input: board = [['A', 'B', 'C', 'D'], ['P', 'E', 'T', 'H'], ['I', 'R', 'K', 'L']] , word = "PETER"
+
+Output: False
+
+Explanation: Cannot reuse the "E".
+
+Example #3
+Word Search Femur Example
+
+Input: board = [['F', 'B', 'C', 'D'], ['E', 'M', 'G', 'H'], ['I', 'J', 'U', 'R']] , word = "FEMUR"
+
+Output: False
+
+Explanation: Cannot go diagonally from "M" to "U".
+*/
+
+Solution: 
+def exist(board, word):
+
+  M_ROWS = len(board)
+  N_COLS = len(board[0])
+
+  def search(i,j,word_pos):
+    """
+    Check if possible to find word[word_pos:]
+    from location (i,j) on current board
+    """
+  
+    # BASE CASE -- reached end of word
+    if word_pos == len(word):
+      return True
+  
+    # RECURSION -- True if word[word_pos] matches and
+    # can get word[word_pos+1:] from at least one neighbor
+  
+    # verify (i,j) is in bounds and current letter matches
+    if (
+      0 <= i < M_ROWS and 0 <= j < N_COLS 
+      and board[i][j] == word[word_pos]
+    ):
+      board[i][j] = '.'
+      # can get word[word_pos+1:] from at least one neighbor?
+      if (
+        search(i+1, j, word_pos+1)    # down
+        or search(i-1, j, word_pos+1) # up
+        or search(i, j+1, word_pos+1) # right
+        or search(i, j-1, word_pos+1) # left
+        ):
+        return True
+      board[i][j] = word[word_pos]
+  
+    return False
