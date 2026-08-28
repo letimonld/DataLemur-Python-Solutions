@@ -1,0 +1,54 @@
+/*
+You are given an integer array coins representing coins of different denominations and an integer target_amount representing a total amount of money.
+
+Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+You may assume that you have an infinite number of each kind of coin.
+
+Example #1
+Input: coins = [2, 4, 1, 4], target_amount = 5
+
+Output: 2
+
+Explanation:
+There are several combinations to make up the amount 5, such as:
+
+using five 1's (1 + 1 + 1 + 1 + 1)
+using three 1's and one 2 (1 + 1 + 1 + 2)
+using two 2's and one 1 (2 + 2 + 1)
+using one 4 and one 1 (4 + 1)
+The combination that uses the fewest coins is the last one (using 4 and 1), which totals 2 coins.
+
+Example #2
+Input: coins = [2], target_amount = 3
+
+Output: -1
+
+Explanation:
+It is impossible to make up the amount 3 using only the coin 2, since 2 cannot be combined in any way to reach 3. Therefore, the output is -1.
+*/
+
+Solution: 
+def coin_change(coins, target_amount):
+    def min_coins(i, current_amount):
+        # Base case: target amount achieved
+        if current_amount == target_amount:
+            return 0
+        # Base case: out of coins or target exceeded
+        if i == len(coins) or current_amount > target_amount:
+            return float('inf')
+        
+        # Recursive case: include the current coin and increment the count
+        choose = 1 + min_coins(i, current_amount + coins[i])
+        # Recursive case: skip the current coin and move to the next
+        skip = min_coins(i + 1, current_amount)
+        
+        # Return the minimum number of coins needed
+        return min(choose, skip)
+    
+    result = min_coins(0, 0)
+    if result == float('inf'):
+    	return -1
+    else:
+    	return result
+        
